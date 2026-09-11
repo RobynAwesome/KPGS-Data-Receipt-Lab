@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kopanolabs.com/schemas/kpgs-data-receipt.schema.json",
+  "title": "KPGS Data Transformation Receipt",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "receipt_id",
+    "sequence_number",
+    "previous_receipt_hash",
+    "content_hash",
+    "receipt_hash",
+    "idempotency_key",
+    "pka_verdict",
+    "claim_type",
+    "timestamp",
+    "raw",
+    "cleaned",
+    "transformation",
+    "pka",
+    "proof_state"
+  ],
+  "properties": {
+    "apiVersion": {"const": "kpgs.kopanolabs/v1alpha1"},
+    "kind": {"const": "DataTransformationReceipt"},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "sequence_number": {"type": "integer", "minimum": 1},
+    "previous_receipt_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "content_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "receipt_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "idempotency_key": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "pka_verdict": {"enum": ["KNOWN", "PARTIAL", "UNKNOWN", "CONFLICTING"]},
+    "claim_type": {"const": "DATA_TRANSFORMATION"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "raw": {
+      "type": "object",
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "bytes": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "cleaned": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "transformation": {"type": "object"},
+    "pka": {"type": "object"},
+    "proof_state": {"enum": ["EXECUTED_UNVALIDATED", "TESTED", "POC_PROVEN"]},
+    "evidence_refs": {"type": "array", "items": {"type": ["string", "null"]}},
+    "boundaries": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}
