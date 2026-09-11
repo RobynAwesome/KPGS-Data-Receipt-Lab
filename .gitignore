@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.DS_Store
+
+# Large/runtime data stays local; provenance and hashes go into receipts.
+data/raw/*
+!data/raw/.gitkeep
+data/cleaned/*
+!data/cleaned/.gitkeep
+
+# Keep generated receipt JSONs commit-eligible for evidence.
