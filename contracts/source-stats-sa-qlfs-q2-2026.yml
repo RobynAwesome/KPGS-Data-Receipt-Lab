@@ -1,0 +1,35 @@
+apiVersion: kpgs.kopanolabs/v1alpha1
+kind: DataSourceContract
+
+metadata:
+  id: stats-sa.qlfs.2026.q2
+  date: 2026-09-11
+  state: SOURCE_SURFACE_VERIFIED
+
+source:
+  publisher: Statistics South Africa
+  publication: Quarterly Labour Force Survey (QLFS), Q2 2026
+  publication_date: 2026-08-11
+  official_publication_url: https://www.statssa.gov.za/?PPN=P0211&page_id=1854
+  official_data_portal_url: https://isibaloweb.statssa.gov.za/pages/surveys/pss/qlfs/2026/qlfs2026.php
+  direct_csv_url: UNKNOWN_PENDING_CAPTURE
+  source_format: CSV
+  authority_class: OFFICIAL_PUBLIC_SOURCE
+
+known_official_claims:
+  - claim: official_unemployment_rate_q2_2026
+    value: 33.6
+    unit: percent
+    evidence_url: https://www.statssa.gov.za/?PPN=P0211&SCH=74512&page_id=1856
+
+boundaries:
+  - source_surface_verified_is_not_raw_file_ingested
+  - publication_claim_is_not_pipeline_reconstruction
+  - raw_must_not_be_overwritten
+  - cleaned_must_not_replace_raw
+  - direct_csv_url_remains_unknown_until_captured_from_official_portal
+
+poc:
+  issue: 1
+  required_pipeline: RAW_TO_CLEAN_TO_PKA_TO_RECEIPT
+  current_state: NOT_YET_PROVEN
